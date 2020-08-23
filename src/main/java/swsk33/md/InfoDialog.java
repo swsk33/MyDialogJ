@@ -13,9 +13,6 @@ public class InfoDialog {
 	public final static int WARN = 2;
 	public final static int ERROR = 3;
 
-	/**
-	 * @wbp.parser.entryPoint
-	 */
 	public void createShortNoticeDialog(InfoDialogModel idm) {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension sc = kit.getScreenSize();

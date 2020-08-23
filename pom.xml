@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gitee.swsk33</groupId>
+	<artifactId>MyDialogJ</artifactId>
+	<version>1.0.0</version>
+	<name>MyDialogJ</name>
+	<description>Java中用于方便地创建各种对话框、告示框的外部包。</description>
+	<url>https://gitee.com/swsk33/MyDialogJ</url>
+	<!--打包方式 -->
+	<packaging>jar</packaging>
+
+	<!--maven工程配置 -->
+	<properties>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+	</properties>
+
+	<!--许可证信息，根据自己的情况修改 -->
+	<licenses>
+		<license>
+			<name>GNU General Public License v2.0</name>
+			<url>https://www.gnu.org/</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<!--托管仓库信息，根据自己的应用情况修改 -->
+	<scm>
+		<url>https://gitee.com/swsk33/MyDialogJ</url>
+		<connection>https://gitee.com/swsk33/MyDialogJ.git</connection>
+		<developerConnection>https://gitee.com/swsk33/MyDialogJ</developerConnection>
+	</scm>
+
+	<!--开发者信息 -->
+	<developers>
+		<developer>
+			<name>swsk33</name>
+			<email>yanhanhui2001a@163.com</email>
+			<url>https://gitee.com/swsk33</url>
+		</developer>
+	</developers>
+
+	<!--depoly上传仓库地址配置信息 -->
+	<distributionManagement>
+		<snapshotRepository>
+			<!--id 要与setting.xml server id一致 -->
+			<id>snapshot</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<!--id 要与setting.xml server id一致 -->
+			<id>release</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+	</distributionManagement>
+
+	<!--包含发布到oss.sonatype.org需要的组件（java doc组件、java source组件和gpg组件） -->
+	<build>
+		<!--资源文件配置 -->
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+
+			<resource>
+				<directory>${basedir}/src/main/java</directory>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+
+		<!--插件，根据自己的需要删除/添加 -->
+		<plugins>
+			<!--java source生成插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--java doc生成插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--gpg签名插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
