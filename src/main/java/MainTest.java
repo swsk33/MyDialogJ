@@ -1,4 +1,5 @@
 import swsk33.md.*;
+import swsk33.md.model.InfoDialogModel;
 
 public class MainTest {
 

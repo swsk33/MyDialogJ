@@ -3,6 +3,8 @@ package swsk33.md;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import swsk33.md.model.*;
+
 import java.net.*;
 
 public class InfoDialog {

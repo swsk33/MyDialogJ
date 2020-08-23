@@ -1,4 +1,4 @@
-package swsk33.md;
+package swsk33.md.model;
 
 public class InfoDialogModel {
 
