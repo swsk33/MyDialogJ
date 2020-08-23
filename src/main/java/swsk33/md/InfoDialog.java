@@ -22,7 +22,7 @@ public class InfoDialog {
 		jd.setModal(idm.getIsModal());
 		jd.setAlwaysOnTop(idm.getIsOnTop());
 		jd.setUndecorated(true);
-		URL bg = InfoDialog.class.getResource("res/bg/InfoBg.png");
+		URL bg = InfoDialog.class.getResource("./res/bg/InfoBg.png");
 		JLabel bl = new JLabel(new ImageIcon(bg)); // 把上面的图片对象加到一个名为bl的标签里
 		bl.setBounds(0, 0, jd.getWidth(), jd.getHeight()); // 设置标签大小
 		JPanel imagePanel = (JPanel) jd.getContentPane(); // 把内容窗格转化为JPanel，否则不能用方法setOpaque()来使内容窗格透明 ，使内容窗格透明后才能显示背景图片
@@ -50,8 +50,8 @@ public class InfoDialog {
 		JLabel content = new JLabel("<html>" + idm.getContent() + "</html>");
 		content.setFont(new Font("等线", Font.BOLD, 18));
 		content.setBounds(78, 48, 352, 131);
-		URL jbnor = InfoDialog.class.getResource("res/button/close-normal.png");
-		URL jbmon = InfoDialog.class.getResource("res/button/close-mouseon.png");
+		URL jbnor = InfoDialog.class.getResource("./res/button/close-normal.png");
+		URL jbmon = InfoDialog.class.getResource("./res/button/close-mouseon.png");
 		ImageIcon nor = new ImageIcon(jbnor);
 		ImageIcon mon = new ImageIcon(jbmon);
 		JButton close = new JButton(nor);
