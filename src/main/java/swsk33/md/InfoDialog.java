@@ -3,8 +3,9 @@ package swsk33.md;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import swsk33.md.model.*;
 import java.net.*;
+import swsk33.md.model.*;
+import swsk33.md.Exception.*;
 
 public class InfoDialog {
 	private static int x;
@@ -23,9 +24,12 @@ public class InfoDialog {
 	public final static int ERROR = 2;
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * 创建一个信息告示窗
+	 * 
+	 * @param idm 信息告示窗的属性模型。需要先实例化InfoDialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入
+	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
-	public void createShortNoticeDialog(InfoDialogModel idm) {
+	public void createShortNoticeDialog(InfoDialogModel idm) throws ContentOutOfRangeException {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension sc = kit.getScreenSize();
 		JDialog jd = new JDialog();
@@ -59,9 +63,22 @@ public class InfoDialog {
 		JLabel title = new JLabel(idm.getTitle());
 		title.setFont(new Font("等线", Font.BOLD, 16));
 		title.setBounds(6, 3, 238, 24);
+		// 字体大小根据内容长度自适应
+		int size = 0;
+		if (idm.getContent().length() <= 64) {
+			size = 18;
+		} else if (idm.getContent().length() > 64 && idm.getContent().length() <= 72) {
+			size = 16;
+		} else if (idm.getContent().length() > 72 && idm.getContent().length() <= 84) {
+			size = 14;
+		} else if (idm.getContent().length() > 84 && idm.getContent().length() <= 110) {
+			size = 13;
+		} else {
+			throw new ContentOutOfRangeException("设定的内容字数超出限制（110长度）！超出：" + (idm.getContent().length() - 110));
+		}
 		JLabel content = new JLabel("<html>" + idm.getContent() + "</html>");
-		content.setFont(new Font("等线", Font.BOLD, 18));
-		content.setBounds(104, 47, 294, 78);
+		content.setFont(new Font("等线", Font.BOLD, size));
+		content.setBounds(101, 40, 297, 78);
 		URL jbnor = InfoDialog.class.getResource("/res/button/close-normal.png");
 		URL jbmon = InfoDialog.class.getResource("/res/button/close-mouseon.png");
 		ImageIcon nor = new ImageIcon(jbnor);
@@ -98,7 +115,7 @@ public class InfoDialog {
 		});
 		JButton ok = new JButton("知道了");
 		ok.setFont(new Font("黑体", Font.BOLD, 13));
-		ok.setBounds(175, 135, 76, 24);
+		ok.setBounds(168, 130, 82, 32);
 		ok.setContentAreaFilled(false);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
