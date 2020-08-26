@@ -2,42 +2,48 @@ package swsk33.md;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 import java.net.*;
-import swsk33.md.model.*;
+import javax.swing.*;
 import swsk33.md.Exception.*;
+import swsk33.md.model.*;
 
 /**
- * 信息告示窗，只用于显示提示信息
+ * 事件告示窗，分为：<br>
+ * <ol>
+ * <li>布尔型窗口：有“是”和“否”两个按钮，点是返回true点否返回false
+ * <li>自定义事件窗口：有“确定”和“取消”两个按钮，通过实现接口的方法来给确定按钮添加代码段，点取消则会关闭窗口而不干任何事
+ * </ol>
+ * 事件窗口不需要设置模态，因为它固定了就是模态
  * 
  * @author swsk33
  *
  */
-public class InfoDialog {
+public class EventDialog {
 	private static int x;
 	private static int y;
+	private static boolean isok = false;
 	private JDialog jd = new JDialog();
 	private Toolkit kit = Toolkit.getDefaultToolkit();
 	private Dimension sc = kit.getScreenSize();
 	/**
-	 * 告示信息提示窗
+	 * 告示信息提示事件窗
 	 */
 	public final static int INFO = 0;
 	/**
-	 * 警告信息提示窗
+	 * 警告信息提示事件窗
 	 */
 	public final static int WARN = 1;
 	/**
-	 * 错误信息提示窗
+	 * 错误信息提示事件窗
 	 */
 	public final static int ERROR = 2;
 
-	private void dialogSetup(int width, int height, String bgPath, DialogModel dm) { // 设置窗口基本属性和特性
+	private void dialogSetup(int width, int height, String bgPath, DialogModel idms) { // 设置窗口基本属性和特性
 		jd.setSize(width, height);
 		jd.setLocation((sc.width - jd.getWidth()) / 2, (sc.height - jd.getHeight()) / 2);
-		jd.setModal(dm.getIsModal());
-		jd.setAlwaysOnTop(dm.getIsOnTop());
+		jd.setAlwaysOnTop(idms.getIsOnTop());
 		jd.setUndecorated(true);
+		jd.setModal(true);
 		URL bg = this.getClass().getResource(bgPath);
 		JLabel bl = new JLabel(new ImageIcon(bg)); // 把上面的图片对象加到一个名为bl的标签里
 		bl.setBounds(0, 0, jd.getWidth(), jd.getHeight()); // 设置标签大小
@@ -63,21 +69,21 @@ public class InfoDialog {
 	}
 
 	/**
-	 * 创建一个信息告示窗
+	 * 布尔型事件窗口，是一个模态窗，点确定返回true，取消或者直接关闭窗口返回false
 	 * 
-	 * @param dm 信息告示窗的属性模型。需要先实例化DialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入<br>
-	 *           这个窗口中传入的DialogModel实例需要设置的属性（5个，其中3个有默认值）：<br>
+	 * @param dm 告示窗的属性模型。需要先实例化DialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入<br>
+	 *           这个窗口中传入的DialogModel实例需要设置的属性（4个，其中有2个有默认值）：<br>
 	 *           <ol>
 	 *           <li>setTitle(String title)：设置窗口标题</li>
 	 *           <li>setContent(String content)：设置窗口内容</li>
 	 *           <li>setDialogType(int dialogType)：设置窗口类型，不设置的话默认为告示信息提示窗</li>
-	 *           <li>setIsModal(boolean isModal)：设置窗口是否模态，不设置的话默认为不模态</li>
 	 *           <li>setIsOnTop(boolean isOnTop)：设置窗口是否置顶，不设置的话默认为不置顶</li>
 	 *           </ol>
-	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
+	 * @return
+	 * @throws ContentOutOfRangeException
 	 */
-	public void createShortNoticeDialog(DialogModel dm) throws ContentOutOfRangeException {
-		this.dialogSetup(435, 178, "/res/bg/InfoBg.png", dm);
+	public boolean createBooleanEventDialog(DialogModel dm) throws ContentOutOfRangeException {
+		this.dialogSetup(435, 178, "/res/bg/BooleanDialog.png", dm);
 		JLabel title = new JLabel(dm.getTitle());
 		title.setFont(new Font("等线", Font.BOLD, 16));
 		title.setBounds(6, 3, 238, 24);
@@ -125,18 +131,30 @@ public class InfoDialog {
 		});
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				isok = false;
 				jd.dispose();
 			}
 		});
-		JButton ok = new JButton("知道了");
+		JButton ok = new JButton("确定");
 		ok.setFont(new Font("黑体", Font.BOLD, 13));
-		ok.setBounds(168, 130, 82, 32);
+		ok.setBounds(101, 130, 82, 32);
 		ok.setContentAreaFilled(false);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				isok = true;
 				jd.dispose();
 			}
 		});
+		JButton no = new JButton("取消");
+		no.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				isok = false;
+				jd.dispose();
+			}
+		});
+		no.setBounds(229, 130, 82, 32);
+		no.setContentAreaFilled(false);
+		no.setFont(new Font("黑体", Font.BOLD, 13));
 		JPanel jp = new JPanel();
 		jp.setOpaque(false);
 		jp.setLayout(null);
@@ -145,73 +163,9 @@ public class InfoDialog {
 		jp.add(content);
 		jp.add(close);
 		jp.add(ok);
+		jp.add(no);
 		jd.getContentPane().add(jp);
 		jd.show();
-	}
-
-	/**
-	 * 创建一个长消息信息告示框，用于大量信息告示，没有字数限制。
-	 * 
-	 * @param dm 信息告示窗的属性模型。需要先实例化DialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入<br>
-	 *           这个窗口中传入的DialogModel实例需要设置的属性（4个，其中有2个有默认值）：<br>
-	 *           <ol>
-	 *           <li>setTitle(String title)：设置窗口标题</li>
-	 *           <li>setContent(String content)：设置窗口内容</li>
-	 *           <li>setIsModal(boolean isModal)：设置窗口是否模态，不设置的话默认为不模态</li>
-	 *           <li>setIsOnTop(boolean isOnTop)：设置窗口是否置顶，不设置的话默认为不置顶</li>
-	 *           </ol>
-	 */
-	public void createLongMessageDialog(DialogModel dm) {
-		this.dialogSetup(325, 345, "/res/bg/LongMessageBg.png", dm);
-		JLabel title = new JLabel(dm.getTitle());
-		title.setFont(new Font("黑体", Font.BOLD, 15));
-		title.setBounds(3, 3, 156, 18);
-		JTextArea jta = new JTextArea();
-		jta.setFont(new Font("等线", Font.BOLD, 15));
-		jta.setText(dm.getContent());
-		jta.setLineWrap(true);
-		jta.setEditable(false);
-		JScrollPane jsp = new JScrollPane(jta);
-		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		jsp.setBounds(12, 36, 301, 257);
-		URL nor = this.getClass().getResource("/res/button/long-close-normal.png");
-		URL mon = this.getClass().getResource("/res/button/long-close-mouseon.png");
-		JButton close = new JButton(new ImageIcon(nor));
-		close.setBounds(299, 2, 24, 24);
-		close.setBorderPainted(false);
-		close.setContentAreaFilled(false);
-		close.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				jd.dispose();
-			}
-		});
-		close.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				close.setIcon(new ImageIcon(mon));
-			}
-
-			public void mouseExited(MouseEvent e) {
-				close.setIcon(new ImageIcon(nor));
-			}
-		});
-		JButton ok = new JButton("知道了");
-		ok.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				jd.dispose();
-			}
-		});
-		ok.setFont(new Font("黑体", Font.BOLD, 14));
-		ok.setContentAreaFilled(false);
-		ok.setBounds(122, 305, 79, 28);
-		JPanel jp = new JPanel();
-		jp.setOpaque(false);
-		jp.setLayout(null);
-		jp.add(title);
-		jp.add(jsp);
-		jp.add(close);
-		jp.add(ok);
-		jd.getContentPane().add(jp);
-		jd.show();
+		return isok;
 	}
 }
