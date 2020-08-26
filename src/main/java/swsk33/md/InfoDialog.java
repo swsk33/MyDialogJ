@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.net.*;
+import swsk33.md.exception.*;
 import swsk33.md.model.*;
-import swsk33.md.Exception.*;
 
 /**
  * 信息告示窗，只用于显示提示信息
@@ -17,6 +17,7 @@ public class InfoDialog {
 	private static int x;
 	private static int y;
 	private JDialog jd = new JDialog();
+	private JLabel title = new JLabel();
 	private Toolkit kit = Toolkit.getDefaultToolkit();
 	private Dimension sc = kit.getScreenSize();
 	/**
@@ -78,7 +79,7 @@ public class InfoDialog {
 	 */
 	public void createShortNoticeDialog(DialogModel dm) throws ContentOutOfRangeException {
 		this.dialogSetup(435, 178, "/res/bg/InfoBg.png", dm);
-		JLabel title = new JLabel(dm.getTitle());
+		title.setText(dm.getTitle());
 		title.setFont(new Font("等线", Font.BOLD, 16));
 		title.setBounds(6, 3, 238, 24);
 		// 字体大小根据内容长度自适应

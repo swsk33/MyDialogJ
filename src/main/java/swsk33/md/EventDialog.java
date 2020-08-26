@@ -4,14 +4,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
 import javax.swing.*;
-import swsk33.md.Exception.*;
+import swsk33.md.event.*;
+import swsk33.md.exception.*;
 import swsk33.md.model.*;
 
 /**
  * 事件告示窗，分为：<br>
  * <ol>
- * <li>布尔型窗口：有“是”和“否”两个按钮，点是返回true点否返回false
- * <li>自定义事件窗口：有“确定”和“取消”两个按钮，通过实现接口的方法来给确定按钮添加代码段，点取消则会关闭窗口而不干任何事
+ * <li>布尔型窗口：有“确定”和“取消”两个按钮，点确定返回true点取消返回false
+ * <li>自定义事件窗口：有“确定”和“取消”两个按钮，通过重写抽象类的方法来给确定按钮和取消添加代码段
  * </ol>
  * 事件窗口不需要设置模态，因为它固定了就是模态
  * 
@@ -23,6 +24,13 @@ public class EventDialog {
 	private static int y;
 	private static boolean isok = false;
 	private JDialog jd = new JDialog();
+	private JLabel title = new JLabel();
+	private JLabel content = new JLabel();
+	private JLabel icol = new JLabel();
+	private JButton close = new JButton();
+	private JButton ok = new JButton();
+	private JButton no = new JButton();
+	private JPanel jp = new JPanel();
 	private Toolkit kit = Toolkit.getDefaultToolkit();
 	private Dimension sc = kit.getScreenSize();
 	/**
@@ -38,10 +46,10 @@ public class EventDialog {
 	 */
 	public final static int ERROR = 2;
 
-	private void dialogSetup(int width, int height, String bgPath, DialogModel idms) { // 设置窗口基本属性和特性
+	private void dialogSetup(int width, int height, String bgPath, DialogModel dm) throws ContentOutOfRangeException { // 设置窗口基本属性和特性
 		jd.setSize(width, height);
 		jd.setLocation((sc.width - jd.getWidth()) / 2, (sc.height - jd.getHeight()) / 2);
-		jd.setAlwaysOnTop(idms.getIsOnTop());
+		jd.setAlwaysOnTop(dm.getIsOnTop());
 		jd.setUndecorated(true);
 		jd.setModal(true);
 		URL bg = this.getClass().getResource(bgPath);
@@ -66,25 +74,7 @@ public class EventDialog {
 				jd.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
 			}
 		});
-	}
-
-	/**
-	 * 布尔型事件窗口，是一个模态窗，点确定返回true，取消或者直接关闭窗口返回false
-	 * 
-	 * @param dm 告示窗的属性模型。需要先实例化DialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入<br>
-	 *           这个窗口中传入的DialogModel实例需要设置的属性（4个，其中有2个有默认值）：<br>
-	 *           <ol>
-	 *           <li>setTitle(String title)：设置窗口标题</li>
-	 *           <li>setContent(String content)：设置窗口内容</li>
-	 *           <li>setDialogType(int dialogType)：设置窗口类型，不设置的话默认为告示信息提示窗</li>
-	 *           <li>setIsOnTop(boolean isOnTop)：设置窗口是否置顶，不设置的话默认为不置顶</li>
-	 *           </ol>
-	 * @return
-	 * @throws ContentOutOfRangeException
-	 */
-	public boolean createBooleanEventDialog(DialogModel dm) throws ContentOutOfRangeException {
-		this.dialogSetup(435, 178, "/res/bg/BooleanDialog.png", dm);
-		JLabel title = new JLabel(dm.getTitle());
+		title.setText(dm.getTitle());
 		title.setFont(new Font("等线", Font.BOLD, 16));
 		title.setBounds(6, 3, 238, 24);
 		// 字体大小根据内容长度自适应
@@ -100,7 +90,7 @@ public class EventDialog {
 		} else {
 			throw new ContentOutOfRangeException("设定的内容字数超出限制（110长度）！超出：" + (dm.getContent().length() - 110));
 		}
-		JLabel content = new JLabel("<html>" + dm.getContent() + "</html>");
+		content.setText("<html>" + dm.getContent() + "</html>");
 		content.setFont(new Font("等线", Font.BOLD, size));
 		content.setBounds(101, 40, 297, 78);
 		URL jbnor = this.getClass().getResource("/res/button/close-normal.png");
@@ -114,9 +104,9 @@ public class EventDialog {
 			ico = "/res/bg/ico/error-ico.png";
 		}
 		URL frico = InfoDialog.class.getResource(ico);
-		JLabel icol = new JLabel(new ImageIcon(frico));
+		icol.setIcon(new ImageIcon(frico));
 		icol.setBounds(31, 62, 45, 45);
-		JButton close = new JButton(new ImageIcon(jbnor));
+		close.setIcon(new ImageIcon(jbnor));
 		close.setBounds(407, 0, 28, 28);
 		close.setContentAreaFilled(false);
 		close.setBorderPainted(false);
@@ -135,27 +125,14 @@ public class EventDialog {
 				jd.dispose();
 			}
 		});
-		JButton ok = new JButton("确定");
+		ok.setText("确定");
 		ok.setFont(new Font("黑体", Font.BOLD, 13));
 		ok.setBounds(101, 130, 82, 32);
 		ok.setContentAreaFilled(false);
-		ok.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				isok = true;
-				jd.dispose();
-			}
-		});
-		JButton no = new JButton("取消");
-		no.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				isok = false;
-				jd.dispose();
-			}
-		});
-		no.setBounds(229, 130, 82, 32);
+		no.setText("取消");
+		no.setBounds(246, 130, 82, 32);
 		no.setContentAreaFilled(false);
 		no.setFont(new Font("黑体", Font.BOLD, 13));
-		JPanel jp = new JPanel();
 		jp.setOpaque(false);
 		jp.setLayout(null);
 		jp.add(title);
@@ -165,7 +142,68 @@ public class EventDialog {
 		jp.add(ok);
 		jp.add(no);
 		jd.getContentPane().add(jp);
+	}
+
+	/**
+	 * 布尔型事件窗口，是一个模态窗，点确定返回true，取消或者直接关闭窗口返回false
+	 * 
+	 * @param dm 告示窗的属性模型。需要先实例化DialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入<br>
+	 *           这个窗口中传入的DialogModel实例需要设置的属性（4个，其中有2个有默认值）：<br>
+	 *           <ol>
+	 *           <li>setTitle(String title)：设置窗口标题</li>
+	 *           <li>setContent(String content)：设置窗口内容</li>
+	 *           <li>setDialogType(int dialogType)：设置窗口类型，不设置的话默认为告示信息提示窗</li>
+	 *           <li>setIsOnTop(boolean isOnTop)：设置窗口是否置顶，不设置的话默认为不置顶</li>
+	 *           </ol>
+	 * @return 布尔值，点击确定返回true，取消返回false
+	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
+	 */
+	public boolean createBooleanEventDialog(DialogModel dm) throws ContentOutOfRangeException {
+		this.dialogSetup(435, 178, "/res/bg/BooleanDialog.png", dm);
+		ok.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				isok = true;
+				jd.dispose();
+			}
+		});
+		no.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				isok = false;
+				jd.dispose();
+			}
+		});
 		jd.show();
 		return isok;
+	}
+
+	/**
+	 * 自定义事件窗口，是一个模态窗，通过重写抽象类EventEditor中的customOkEvent()和customCancelEvent()方法，传入到此方法中来分别实现确定按钮和取消按钮的自定义事件。
+	 * 
+	 * @param dm  告示窗的属性模型。需要先实例化DialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入<br>
+	 *            这个窗口中传入的DialogModel实例需要设置的属性（4个，其中有2个有默认值）：<br>
+	 *            <ol>
+	 *            <li>setTitle(String title)：设置窗口标题</li>
+	 *            <li>setContent(String content)：设置窗口内容</li>
+	 *            <li>setDialogType(int dialogType)：设置窗口类型，不设置的话默认为告示信息提示窗</li>
+	 *            <li>setIsOnTop(boolean isOnTop)：设置窗口是否置顶，不设置的话默认为不置顶</li>
+	 *            </ol>
+	 * @param ete 抽象类，需要在这里重写抽象类的两个方法分别实现两个按钮的事件自定义
+	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
+	 */
+	public void createCustomEventDialog(DialogModel dm, EventEditor ete) throws ContentOutOfRangeException {
+		this.dialogSetup(435, 178, "/res/bg/EventBg.png", dm);
+		ok.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ete.customOkEvent();
+				jd.dispose();
+			}
+		});
+		no.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ete.customCancelEvent();
+				jd.dispose();
+			}
+		});
+		jd.show();
 	}
 }

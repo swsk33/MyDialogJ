@@ -1,4 +1,4 @@
-package swsk33.md.Exception;
+package swsk33.md.exception;
 
 /**
  * 提示框设定的字数超过限制抛出此异常
