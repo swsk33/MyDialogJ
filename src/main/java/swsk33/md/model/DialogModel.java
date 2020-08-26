@@ -1,12 +1,20 @@
 package swsk33.md.model;
 
 /**
- * 告示窗的属性模型，构建告示窗时使用。
+ * 告示窗的属性模型，构建告示窗时使用。 模型中有五个参数在实例化后需要设置，分别是：<br>
+ * <ul>
+ * <li>title 窗口标题</li>
+ * <li>content 窗口内容</li>
+ * <li>dialogType 窗口类型（0,1,2）</li>
+ * <li>isModal 窗口是否模态 isOnTop</li>
+ * <li>窗口是否置顶</li>
+ * </ul>
+ * 这五个参数不一定会全部用到！
  * 
  * @author swsk33
  *
  */
-public class InfoDialogModel {
+public class DialogModel {
 
 	private String title; // 窗口标题
 	private String content; // 窗口内容
