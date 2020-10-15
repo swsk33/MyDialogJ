@@ -41,7 +41,7 @@ import swsk33.mydialogj.event.*;
 DialogModel dm = new DialogModel();// 实例化窗口模型对象
 dm.setTitle("提示窗标题");// 设置窗口标题
 dm.setContent("提示窗内容：少时诵诗书所所所所所所");// 设置窗口内容
-dm.setDialogType(InfoDialog.INFO);// 设置窗口类型，不设置的话默认为告示信息提示窗（其中InfoDialog.INFO或者EventDialog.INFO是告示信息提示窗，InfoDialog.WARN或者EventDialog.WARN是警告信息提示窗，InfoDialog.ERROR或者EventDialog.ERROR是错误信息提示窗）
+dm.setDialogType(DialogTypeValue.INFO);// 设置窗口类型，不设置的话默认为告示信息提示窗（其中DialogTypeValue.INFO是告示信息提示窗，DialogTypeValue.WARN是警告信息提示窗，DialogTypeValue.ERROR是错误信息提示窗）
 dm.setIsModal(false);// 设置窗口是否模态，不设置的话默认为不模态
 dm.setIsOnTop(false);// 设置窗口是否置顶，不设置的话默认为不置顶
 ```
@@ -53,7 +53,7 @@ dm.setIsOnTop(false);// 设置窗口是否置顶，不设置的话默认为不�
 DialogModel dm = new DialogModel();// 实例化窗口模型对象
 dm.setTitle("提示窗标题");// 设置窗口标题
 dm.setContent("测试内容");// 设置窗口内容
-dm.setDialogType(InfoDialog.INFO);// 设置窗口类型，不设置的话默认为告示信息提示窗
+dm.setDialogType(DialogTypeValue.INFO);// 设置窗口类型，不设置的话默认为告示信息提示窗
 dm.setIsModal(false);// 设置窗口是否模态，不设置的话默认为不模态
 dm.setIsOnTop(false);// 设置窗口是否置顶，不设置的话默认为不置顶
 new InfoDialog().createShortNoticeDialog(dm);
@@ -84,7 +84,7 @@ new InfoDialog().createLongMessageDialog(dm);
 DialogModel dm = new DialogModel();// 实例化窗口模型对象
 dm.setTitle("提示窗标题");// 设置窗口标题
 dm.setContent("测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容");// 设置窗口内容
-dm.setDialogType(EventDialog.INFO);// 设置窗口类型，不设置的话默认为告示信息提示窗
+dm.setDialogType(DialogTypeValue.INFO);// 设置窗口类型，不设置的话默认为告示信息提示窗
 dm.setIsOnTop(false);// 设置窗口是否置顶，不设置的话默认为不置顶
 boolean isok = new EventDialog().createBooleanEventDialog(dm);
 System.out.println(isok);
@@ -100,7 +100,7 @@ System.out.println(isok);
 DialogModel dm = new DialogModel();// 实例化窗口模型对象
 dm.setTitle("提示窗标题");// 设置窗口标题
 dm.setContent("测试内容");// 设置窗口内容
-dm.setDialogType(EventDialog.INFO);// 设置窗口类型，不设置的话默认为告示信息提示窗
+dm.setDialogType(DialogTypeValue.INFO);// 设置窗口类型，不设置的话默认为告示信息提示窗
 dm.setIsOnTop(false);// 设置窗口是否置顶，不设置的话默认为不置顶
 new EventDialog().createCustomEventDialog(dm, new EventEditor() {
 
