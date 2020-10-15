@@ -1,4 +1,4 @@
-package swsk33.md.model;
+package swsk33.mydialogj.model;
 
 /**
  * 告示窗的属性模型，构建告示窗时使用。 模型中有五个参数在实例化后需要设置，分别是：<br>
@@ -86,4 +86,5 @@ public class DialogModel {
 	public boolean getIsOnTop() {
 		return isOnTop;
 	}
+
 }

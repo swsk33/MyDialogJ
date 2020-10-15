@@ -1,12 +1,23 @@
-package swsk33.md;
+package swsk33.mydialogj;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.net.*;
-import javax.swing.*;
-import swsk33.md.event.*;
-import swsk33.md.exception.*;
-import swsk33.md.model.*;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import swsk33.mydialogj.event.EventEditor;
+import swsk33.mydialogj.exception.ContentOutOfRangeException;
+import swsk33.mydialogj.model.DialogModel;
 
 /**
  * 事件告示窗，分为：<br>
@@ -20,33 +31,17 @@ import swsk33.md.model.*;
  *
  */
 public class EventDialog {
+
 	private static int x;
 	private static int y;
-	private static boolean isok = false;
+	private boolean isok = false;
 	private JDialog jd = new JDialog();
-	private JLabel title = new JLabel();
-	private JLabel content = new JLabel();
-	private JLabel icol = new JLabel();
-	private JButton close = new JButton();
 	private JButton ok = new JButton();
 	private JButton no = new JButton();
-	private JPanel jp = new JPanel();
-	private Toolkit kit = Toolkit.getDefaultToolkit();
-	private Dimension sc = kit.getScreenSize();
-	/**
-	 * 告示信息提示事件窗
-	 */
-	public final static int INFO = 0;
-	/**
-	 * 警告信息提示事件窗
-	 */
-	public final static int WARN = 1;
-	/**
-	 * 错误信息提示事件窗
-	 */
-	public final static int ERROR = 2;
 
 	private void dialogSetup(int width, int height, String bgPath, DialogModel dm) throws ContentOutOfRangeException { // 设置窗口基本属性和特性
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension sc = kit.getScreenSize();
 		jd.setSize(width, height);
 		jd.setLocation((sc.width - jd.getWidth()) / 2, (sc.height - jd.getHeight()) / 2);
 		jd.setAlwaysOnTop(dm.getIsOnTop());
@@ -74,6 +69,7 @@ public class EventDialog {
 				jd.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
 			}
 		});
+		JLabel title = new JLabel();
 		title.setText(dm.getTitle());
 		title.setFont(new Font("等线", Font.BOLD, 16));
 		title.setBounds(6, 3, 238, 24);
@@ -90,6 +86,7 @@ public class EventDialog {
 		} else {
 			throw new ContentOutOfRangeException("设定的内容字数超出限制（110长度）！超出：" + (dm.getContent().length() - 110));
 		}
+		JLabel content = new JLabel();
 		content.setText("<html>" + dm.getContent() + "</html>");
 		content.setFont(new Font("等线", Font.BOLD, size));
 		content.setBounds(101, 40, 297, 78);
@@ -104,8 +101,10 @@ public class EventDialog {
 			ico = "/res/bg/ico/error-ico.png";
 		}
 		URL frico = InfoDialog.class.getResource(ico);
+		JLabel icol = new JLabel();
 		icol.setIcon(new ImageIcon(frico));
 		icol.setBounds(31, 62, 45, 45);
+		JButton close = new JButton();
 		close.setIcon(new ImageIcon(jbnor));
 		close.setBounds(407, 0, 28, 28);
 		close.setContentAreaFilled(false);
@@ -133,6 +132,7 @@ public class EventDialog {
 		no.setBounds(246, 130, 82, 32);
 		no.setContentAreaFilled(false);
 		no.setFont(new Font("黑体", Font.BOLD, 13));
+		JPanel jp = new JPanel();
 		jp.setOpaque(false);
 		jp.setLayout(null);
 		jp.add(title);
@@ -206,4 +206,5 @@ public class EventDialog {
 		});
 		jd.show();
 	}
+
 }

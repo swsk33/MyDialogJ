@@ -1,4 +1,4 @@
-package swsk33.md.exception;
+package swsk33.mydialogj.exception;
 
 /**
  * 提示框设定的字数超过限制抛出此异常
@@ -7,6 +7,12 @@ package swsk33.md.exception;
  *
  */
 public class ContentOutOfRangeException extends Exception {
+
+	/**
+	 * 生成版本序列号
+	 */
+	private static final long serialVersionUID = -6940808414649974202L;
+
 	/**
 	 * 提示框设定的字数超出限制抛出异常
 	 * 
@@ -15,4 +21,5 @@ public class ContentOutOfRangeException extends Exception {
 	public ContentOutOfRangeException(String msg) {
 		super(msg);
 	}
+
 }

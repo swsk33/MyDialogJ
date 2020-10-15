@@ -1,11 +1,25 @@
-package swsk33.md;
+package swsk33.mydialogj;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.net.*;
-import swsk33.md.exception.*;
-import swsk33.md.model.*;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import swsk33.mydialogj.exception.ContentOutOfRangeException;
+import swsk33.mydialogj.model.DialogModel;
 
 /**
  * 信息告示窗，只用于显示提示信息
@@ -14,26 +28,14 @@ import swsk33.md.model.*;
  *
  */
 public class InfoDialog {
+
 	private static int x;
 	private static int y;
 	private JDialog jd = new JDialog();
-	private JLabel title = new JLabel();
-	private Toolkit kit = Toolkit.getDefaultToolkit();
-	private Dimension sc = kit.getScreenSize();
-	/**
-	 * 告示信息提示窗
-	 */
-	public final static int INFO = 0;
-	/**
-	 * 警告信息提示窗
-	 */
-	public final static int WARN = 1;
-	/**
-	 * 错误信息提示窗
-	 */
-	public final static int ERROR = 2;
 
 	private void dialogSetup(int width, int height, String bgPath, DialogModel dm) { // 设置窗口基本属性和特性
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension sc = kit.getScreenSize();
 		jd.setSize(width, height);
 		jd.setLocation((sc.width - jd.getWidth()) / 2, (sc.height - jd.getHeight()) / 2);
 		jd.setModal(dm.getIsModal());
@@ -79,6 +81,7 @@ public class InfoDialog {
 	 */
 	public void createShortNoticeDialog(DialogModel dm) throws ContentOutOfRangeException {
 		this.dialogSetup(435, 178, "/res/bg/InfoBg.png", dm);
+		JLabel title = new JLabel();
 		title.setText(dm.getTitle());
 		title.setFont(new Font("等线", Font.BOLD, 16));
 		title.setBounds(6, 3, 238, 24);
@@ -215,4 +218,5 @@ public class InfoDialog {
 		jd.getContentPane().add(jp);
 		jd.show();
 	}
+
 }
