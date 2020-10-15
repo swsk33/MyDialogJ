@@ -5,6 +5,7 @@
 2，创建长信息告示窗。<br>
 3，创建布尔事件型告示窗。<br>
 4，创建自定义按钮事件型告示窗。<br>
+5，创建文本信息输入框。<br>
 ### 下载地址:[点击进入下载jar包](https://gitee.com/swsk33/MyDialogJ/releases)
 ## 使用方法：
 ### 1，添加依赖，有下列两种情况：
@@ -13,16 +14,17 @@
 ```
 <dependency>
 	<groupId>com.gitee.swsk33</groupId>
-	<artifactId>MyDialogJ</artifactId>
-	<version>1.0.0</version>
+	<artifactId>mydialog-java</artifactId>
+	<version>1.2.7</version>
 </dependency>
 ```
-### 2，依次导入swsk33.md、swsk33.md.model、swsk33.md.exception、swsk33.md.event（不创建自定义事件型窗口可以不用导入event包），这几个包下所有的或者需要的类。
+### 2，依次导入swsk33.mydialogj、swsk33.mydialogj.model、swsk33.mydialogj.exception、swsk33.mydialogj.utils、swsk33.mydialogj.event（不创建自定义事件型窗口可以不用导入event包），这几个包下所有的或者需要的类。
 ```
-import swsk33.md.*;
-import swsk33.md.model.*;
-import swsk33.md.exception.*;
-import swsk33.md.event.*;
+import swsk33.mydialogj.*;
+import swsk33.mydialogj.model.*;
+import swsk33.mydialogj.exception.*;
+import swsk33.mydialogj.utils.*;
+import swsk33.mydialogj.event.*;
 ```
 ### 3，语法：
 **说在最前：下面语法示例中用了最快捷的方法去执行了某个类中的某个方法。**<br>
@@ -116,3 +118,13 @@ new EventDialog().createCustomEventDialog(dm, new EventEditor() {
 效果：<br>
 ![布尔事件型告示窗效果](https://file.moetu.org/images/2020/08/26/494e3e7652482d9ed.jpg)<br>
 需要注意的是，这里自定义事件提示框的窗口属性实例中不需要设置是否模态属性。<br>
+#### (5)创建一个文本输入或者密码输入窗：
+文本输入框：<br>
+```new InputDialog().createTextInputDialog(窗口标题, 输入提示内容);```<br>
+密码输入框：<br>
+```new InputDialog().createPasswordInputDialog(窗口标题, 输入提示内容);```<br>
+效果：<br>
+文本输入框：<br>
+![文本输入窗效果](https://file.moetu.org/images/2020/10/15/56ba94d1e482060db.jpg)<br>
+密码输入框：<br>
+![密码输入窗效果](https://file.moetu.org/images/2020/10/15/65da1a99ea32e9bdd.jpg)<br>
