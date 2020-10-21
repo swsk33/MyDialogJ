@@ -117,7 +117,7 @@ public class InputDialog {
 				}
 			}
 		});
-		jd.show();
+		jd.setVisible(true);
 		return inputText;
 	}
 
@@ -141,7 +141,7 @@ public class InputDialog {
 				}
 			}
 		});
-		jd.show();
+		jd.setVisible(true);
 		return inputText;
 	}
 

@@ -150,7 +150,7 @@ public class InfoDialog {
 		jp.add(close);
 		jp.add(ok);
 		jd.getContentPane().add(jp);
-		jd.show();
+		jd.setVisible(true);
 	}
 
 	/**
@@ -216,7 +216,7 @@ public class InfoDialog {
 		jp.add(close);
 		jp.add(ok);
 		jd.getContentPane().add(jp);
-		jd.show();
+		jd.setVisible(true);
 	}
 
 }

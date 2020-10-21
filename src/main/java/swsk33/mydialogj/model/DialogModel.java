@@ -49,9 +49,9 @@ public class DialogModel {
 	}
 
 	/**
-	 * 设置窗口类型，其中InfoDialog.INFO是告示信息提示窗，InfoDialog.WARN是警告信息提示窗，InfoDialog.ERROR是错误信息提示窗。
+	 * 设置窗口类型，其中DialogTypeValue.INFO是告示信息提示窗，DialogTypeValue.WARN是警告信息提示窗，DialogTypeValue.ERROR是错误信息提示窗。
 	 * 
-	 * @param dialogType InfoDialog.INFO(0),InfoDialog.WARN(1),InfoDialog.ERROR(2)
+	 * @param dialogType DialogTypeValue.INFO(0),DialogTypeValue.WARN(1),DialogTypeValue.ERROR(2)
 	 */
 	public void setDialogType(int dialogType) {
 		this.dialogType = dialogType;

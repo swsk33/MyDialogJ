@@ -172,7 +172,7 @@ public class EventDialog {
 				jd.dispose();
 			}
 		});
-		jd.show();
+		jd.setVisible(true);
 		return isok;
 	}
 
@@ -204,7 +204,7 @@ public class EventDialog {
 				jd.dispose();
 			}
 		});
-		jd.show();
+		jd.setVisible(true);
 	}
 
 }
