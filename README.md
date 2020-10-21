@@ -15,7 +15,7 @@
 <dependency>
 	<groupId>com.gitee.swsk33</groupId>
 	<artifactId>mydialog-java</artifactId>
-	<version>1.2.7</version>
+	<version>1.2.10</version>
 </dependency>
 ```
 ### 2，依次导入swsk33.mydialogj、swsk33.mydialogj.model、swsk33.mydialogj.exception、swsk33.mydialogj.utils、swsk33.mydialogj.event（不创建自定义事件型窗口可以不用导入event包），这几个包下所有的或者需要的类。
