@@ -15,7 +15,7 @@
 <dependency>
 	<groupId>com.gitee.swsk33</groupId>
 	<artifactId>mydialog-java</artifactId>
-	<version>1.2.10</version>
+	<version>1.2.12</version>
 </dependency>
 ```
 ### 2，依次导入swsk33.mydialogj、swsk33.mydialogj.model、swsk33.mydialogj.exception、swsk33.mydialogj.utils、swsk33.mydialogj.event（不创建自定义事件型窗口可以不用导入event包），这几个包下所有的或者需要的类。
@@ -128,3 +128,5 @@ new EventDialog().createCustomEventDialog(dm, new EventEditor() {
 ![文本输入窗效果](https://file.moetu.org/images/2020/10/15/56ba94d1e482060db.jpg)<br>
 密码输入框：<br>
 ![密码输入窗效果](https://file.moetu.org/images/2020/10/15/65da1a99ea32e9bdd.jpg)<br>
+
+>最后更新：2020.10.25

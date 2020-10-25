@@ -23,7 +23,7 @@ import swsk33.mydialogj.model.DialogModel;
  * 事件告示窗，分为：<br>
  * <ol>
  * <li>布尔型窗口：有“确定”和“取消”两个按钮，点确定返回true点取消返回false
- * <li>自定义事件窗口：有“确定”和“取消”两个按钮，通过重写抽象类的方法来给确定按钮和取消添加代码段
+ * <li>自定义事件窗口：有“确定”和“取消”两个按钮，通过实现接口的方法来给确定按钮和取消添加代码段
  * </ol>
  * 事件窗口不需要设置模态，因为它固定了就是模态
  * 
@@ -186,7 +186,7 @@ public class EventDialog {
 	 *            <li>setDialogType(int dialogType)：设置窗口类型，不设置的话默认为告示信息提示窗</li>
 	 *            <li>setIsOnTop(boolean isOnTop)：设置窗口是否置顶，不设置的话默认为不置顶</li>
 	 *            </ol>
-	 * @param ete 抽象类，需要在这里重写抽象类的两个方法分别实现两个按钮的事件自定义
+	 * @param ete 接口，需要在这里实现接口的两个方法分别实现两个按钮的事件自定义
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
 	public void createCustomEventDialog(DialogModel dm, EventEditor ete) throws ContentOutOfRangeException {
