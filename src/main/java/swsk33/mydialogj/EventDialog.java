@@ -38,10 +38,9 @@ public class EventDialog {
 	private JDialog jd = new JDialog();
 	private JButton ok = new JButton();
 	private JButton no = new JButton();
+	private Dimension sc = Toolkit.getDefaultToolkit().getScreenSize();
 
 	private void dialogSetup(int width, int height, String bgPath, DialogModel dm) throws ContentOutOfRangeException { // 设置窗口基本属性和特性
-		Toolkit kit = Toolkit.getDefaultToolkit();
-		Dimension sc = kit.getScreenSize();
 		jd.setSize(width, height);
 		jd.setLocation((sc.width - jd.getWidth()) / 2, (sc.height - jd.getHeight()) / 2);
 		jd.setAlwaysOnTop(dm.getIsOnTop());

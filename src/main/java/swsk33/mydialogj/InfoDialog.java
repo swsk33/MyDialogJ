@@ -31,11 +31,10 @@ public class InfoDialog {
 
 	private static int x;
 	private static int y;
-	private JDialog jd = new JDialog();
+	private Dimension sc = Toolkit.getDefaultToolkit().getScreenSize();
 
-	private void dialogSetup(int width, int height, String bgPath, DialogModel dm) { // 设置窗口基本属性和特性
-		Toolkit kit = Toolkit.getDefaultToolkit();
-		Dimension sc = kit.getScreenSize();
+	private JDialog dialogSetup(int width, int height, String bgPath, DialogModel dm) { // 设置窗口基本属性和特性
+		JDialog jd = new JDialog();
 		jd.setSize(width, height);
 		jd.setLocation((sc.width - jd.getWidth()) / 2, (sc.height - jd.getHeight()) / 2);
 		jd.setModal(dm.getIsModal());
@@ -63,6 +62,7 @@ public class InfoDialog {
 				jd.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
 			}
 		});
+		return jd;
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class InfoDialog {
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
 	public void createShortNoticeDialog(DialogModel dm) throws ContentOutOfRangeException {
-		this.dialogSetup(435, 178, "/res/bg/InfoBg.png", dm);
+		JDialog jd = this.dialogSetup(435, 178, "/res/bg/InfoBg.png", dm);
 		JLabel title = new JLabel();
 		title.setText(dm.getTitle());
 		title.setFont(new Font("等线", Font.BOLD, 16));
@@ -166,7 +166,7 @@ public class InfoDialog {
 	 *           </ol>
 	 */
 	public void createLongMessageDialog(DialogModel dm) {
-		this.dialogSetup(325, 345, "/res/bg/LongMessageBg.png", dm);
+		JDialog jd = this.dialogSetup(325, 345, "/res/bg/LongMessageBg.png", dm);
 		JLabel title = new JLabel(dm.getTitle());
 		title.setFont(new Font("黑体", Font.BOLD, 15));
 		title.setBounds(3, 3, 156, 18);
