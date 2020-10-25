@@ -15,7 +15,7 @@
 <dependency>
 	<groupId>com.gitee.swsk33</groupId>
 	<artifactId>mydialog-java</artifactId>
-	<version>1.2.12</version>
+	<version>1.2.13</version>
 </dependency>
 ```
 ### 2，依次导入swsk33.mydialogj、swsk33.mydialogj.model、swsk33.mydialogj.exception、swsk33.mydialogj.utils、swsk33.mydialogj.event（不创建自定义事件型窗口可以不用导入event包），这几个包下所有的或者需要的类。
@@ -93,7 +93,7 @@ System.out.println(isok);
 ![布尔事件型告示窗效果](https://file.moetu.org/images/2020/08/26/383fc4cf812e967a4.jpg)<br>
 需要注意的是，这里布尔事件型提示框的窗口属性实例中不需要设置是否模态属性。<br>
 #### (4)创建一个自定义按钮事件的告示窗：
-自定义事件窗口，是一个模态窗，通过重写抽象类EventEditor中的customOkEvent()和customCancelEvent()方法，传入到此方法中来分别实现确定按钮和取消按钮的自定义事件。<br>
+自定义事件窗口，是一个模态窗，通过实现接口EventEditor中的customOkEvent()和customCancelEvent()方法，传入到此方法中来分别实现确定按钮和取消按钮的自定义事件。<br>
 ```new EventDialog().createCustomEventDialog(窗口属性模型实例, 实现抽象类EventEditor中的customOkEvent()和customCancelEvent()方法)```
 **例如创建一个标题为“提示窗标题”，内容为“测试内容”的自定义事件类型提示窗，并设置点击确定后控制台输出"ok"，点击取消后控制台输出"cancel"**
 ```
