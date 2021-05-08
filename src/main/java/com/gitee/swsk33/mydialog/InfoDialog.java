@@ -72,7 +72,7 @@ public class InfoDialog {
 		JLabel iconLabel = new JLabel(new ImageIcon(iconUrl));
 		iconLabel.setBounds(31, 62, 45, 45);
 		JButton close = new JButton(new ImageIcon(buttonNormalImage));
-		close.setBounds(407, 0, 28, 28);
+		close.setBounds(415, 0, 28, 28);
 		close.setContentAreaFilled(false);
 		close.setBorderPainted(false);
 		close.addMouseListener(new MouseAdapter() {
@@ -168,7 +168,7 @@ public class InfoDialog {
 		JLabel iconLabel = new JLabel(new ImageIcon(iconUrl));
 		iconLabel.setBounds(31, 62, 45, 45);
 		JButton close = new JButton(new ImageIcon(buttonNormalImage));
-		close.setBounds(407, 0, 28, 28);
+		close.setBounds(415, 0, 28, 28);
 		close.setContentAreaFilled(false);
 		close.setBorderPainted(false);
 		close.addMouseListener(new MouseAdapter() {
@@ -203,7 +203,6 @@ public class InfoDialog {
 		panel.add(close);
 		panel.add(ok);
 		dialog.getContentPane().add(panel);
-		dialog.setVisible(true);
 		if (!isMute) {
 			// 播放提示音
 			String audioPath = "/mydialog/audio/error.au";
@@ -216,6 +215,7 @@ public class InfoDialog {
 			}
 			DialogUtils.playAudioAsync(InfoDialog.class.getResource(audioPath));
 		}
+		dialog.setVisible(true);
 	}
 
 	/**

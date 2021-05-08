@@ -63,7 +63,7 @@ class DialogFactory {
 		JLabel backgroundLabel = new JLabel(new ImageIcon(backgroundImageUrl));
 		backgroundLabel.setBounds(0, 0, dialog.getWidth(), dialog.getHeight());
 		((JPanel) dialog.getContentPane()).setOpaque(false);
-		dialog.getLayeredPane().add(backgroundLabel, Integer.MIN_VALUE);
+		dialog.getLayeredPane().add(backgroundLabel, Integer.valueOf(Integer.MIN_VALUE));
 		dialog.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				mouseAtX = e.getPoint().x;
@@ -104,7 +104,7 @@ class DialogFactory {
 		JLabel backgroundLabel = new JLabel(new ImageIcon(backgroundImageUrl));
 		backgroundLabel.setBounds(0, 0, dialog.getWidth(), dialog.getHeight());
 		((JPanel) dialog.getContentPane()).setOpaque(false);
-		dialog.getLayeredPane().add(backgroundLabel, Integer.MIN_VALUE);
+		dialog.getLayeredPane().add(backgroundLabel, Integer.valueOf(Integer.MIN_VALUE));
 		dialog.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				mouseAtX = e.getPoint().x;
@@ -218,7 +218,7 @@ class DialogFactory {
 		JLabel backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
 		backgroundLabel.setBounds(0, 0, dialog.getWidth(), dialog.getHeight());
 		((JPanel) dialog.getContentPane()).setOpaque(false);
-		dialog.getLayeredPane().add(backgroundLabel, Integer.MIN_VALUE);
+		dialog.getLayeredPane().add(backgroundLabel, Integer.valueOf(Integer.MIN_VALUE));
 		dialog.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				mouseAtX = e.getPoint().x;

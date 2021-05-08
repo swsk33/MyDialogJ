@@ -31,8 +31,8 @@ public class InputDialog {
 		JButton ok = new JButton();
 		JTextField normalInput = new JTextField();
 		JPasswordField passwordInput = new JPasswordField();
-		normalInput.setBounds(0, 0, 0, 0);
-		passwordInput.setBounds(43, 86, 356, 28);
+		normalInput.setBounds(43, 86, 356, 28);
+		passwordInput.setBounds(0, 0, 0, 0);
 		JDialog dialog = DialogFactory.dialogSetup(dialogTitle, tipContent, ok, normalInput, passwordInput);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -59,13 +59,13 @@ public class InputDialog {
 		JButton ok = new JButton();
 		JTextField normalInput = new JTextField();
 		JPasswordField passwordInput = new JPasswordField();
-		normalInput.setBounds(43, 86, 356, 28);
-		passwordInput.setBounds(0, 0, 0, 0);
+		normalInput.setBounds(0, 0, 0, 0);
+		passwordInput.setBounds(43, 86, 356, 28);
 		JDialog dialog = DialogFactory.dialogSetup(dialogTitle, tipContent, ok, normalInput, passwordInput);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!normalInput.getText().toString().equals("")) {
-					inputText = passwordInput.getPassword().toString();
+				if (!String.valueOf(passwordInput.getPassword()).equals("")) {
+					inputText = String.valueOf(passwordInput.getPassword());
 					dialog.dispose();
 				}
 			}

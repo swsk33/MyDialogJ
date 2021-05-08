@@ -50,7 +50,6 @@ public class EventDialog {
 				dialog.dispose();
 			}
 		});
-		dialog.setVisible(true);
 		if (!isMute) {
 			// 播放提示音
 			String audioPath = "/mydialog/audio/error.au";
@@ -63,6 +62,7 @@ public class EventDialog {
 			}
 			DialogUtils.playAudioAsync(InfoDialog.class.getResource(audioPath));
 		}
+		dialog.setVisible(true);
 		return isOk;
 	}
 
