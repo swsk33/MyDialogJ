@@ -1,14 +1,10 @@
 package com.gitee.swsk33.mydialog;
 
-import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,7 +15,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import com.gitee.swsk33.mydialog.exception.ContentOutOfRangeException;
-import com.gitee.swsk33.mydialog.model.DialogModel;
 
 /**
  * 信息告示窗，只用于显示提示信息
@@ -29,108 +24,69 @@ import com.gitee.swsk33.mydialog.model.DialogModel;
  */
 public class InfoDialog {
 
-	private static int x;
-	private static int y;
-	private Dimension sc = Toolkit.getDefaultToolkit().getScreenSize();
-
-	@SuppressWarnings("deprecation")
-	private JDialog dialogSetup(int width, int height, String bgPath, DialogModel dm) { // 设置窗口基本属性和特性
-		JDialog jd = new JDialog();
-		jd.setSize(width, height);
-		jd.setLocation((sc.width - jd.getWidth()) / 2, (sc.height - jd.getHeight()) / 2);
-		jd.setModal(dm.getIsModal());
-		jd.setAlwaysOnTop(dm.getIsOnTop());
-		jd.setUndecorated(true);
-		URL bg = this.getClass().getResource(bgPath);
-		JLabel bl = new JLabel(new ImageIcon(bg)); // 把上面的图片对象加到一个名为bl的标签里
-		bl.setBounds(0, 0, jd.getWidth(), jd.getHeight()); // 设置标签大小
-		JPanel imagePanel = (JPanel) jd.getContentPane(); // 把内容窗格转化为JPanel，否则不能用方法setOpaque()来使内容窗格透明 ，使内容窗格透明后才能显示背景图片
-		imagePanel.setOpaque(false); // 把背景图片添加到分层窗格的最底层作为背景
-		jd.getLayeredPane().add(bl, new Integer(Integer.MIN_VALUE));
-		jd.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) { // 获取点击鼠标时的坐标
-				x = e.getPoint().x;
-				y = e.getPoint().y;
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				jd.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			}
-		});
-		jd.addMouseMotionListener(new MouseMotionAdapter() {// 设置拖拽后，窗口的位置
-			public void mouseDragged(MouseEvent e) {
-				jd.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-				jd.setLocation(e.getXOnScreen() - x, e.getYOnScreen() - y);
-			}
-		});
-		return jd;
-	}
-
 	/**
-	 * 创建一个信息告示窗
+	 * 创建一个信息告示窗（非模态、非置顶、不静音）
 	 * 
-	 * @param dm 信息告示窗的属性模型。需要先实例化DialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入<br>
-	 *           这个窗口中传入的DialogModel实例需要设置的属性（5个，其中3个有默认值）：<br>
-	 *           <ol>
-	 *           <li>setTitle(String title)：设置窗口标题</li>
-	 *           <li>setContent(String content)：设置窗口内容</li>
-	 *           <li>setDialogType(int dialogType)：设置窗口类型，不设置的话默认为告示信息提示窗</li>
-	 *           <li>setIsModal(boolean isModal)：设置窗口是否模态，不设置的话默认为不模态</li>
-	 *           <li>setIsOnTop(boolean isOnTop)：设置窗口是否置顶，不设置的话默认为不置顶</li>
-	 *           </ol>
+	 * @param title      窗口标题
+	 * @param content    窗口内容
+	 * @param dialogType 窗口类型（类型使用com.gitee.swsk33.mydialog.util.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
-	public void createShortNoticeDialog(DialogModel dm) throws ContentOutOfRangeException {
-		JDialog jd = this.dialogSetup(435, 178, "/mydialog/bg/InfoBg.png", dm);
-		JLabel title = new JLabel();
-		title.setText(dm.getTitle());
-		title.setFont(new Font("等线", Font.BOLD, 16));
-		title.setBounds(6, 3, 238, 24);
+	public static void createShortNoticeDialog(String title, String content, int dialogType) throws ContentOutOfRangeException {
+		DialogModel dialogModel = new DialogModel();
+		dialogModel.setTitle(title);
+		dialogModel.setContent(content);
+		dialogModel.setDialogType(dialogType);
+		JDialog dialog = DialogFactory.makeInfoDialog(435, 178, "/mydialog/bg/InfoBg.png", dialogModel);
+		JLabel titleLabel = new JLabel();
+		titleLabel.setText(dialogModel.getTitle());
+		titleLabel.setFont(new Font("等线", Font.BOLD, 16));
+		titleLabel.setBounds(6, 3, 238, 24);
 		// 字体大小根据内容长度自适应
 		int size = 0;
-		if (dm.getContent().length() <= 64) {
+		if (dialogModel.getContent().length() <= 64) {
 			size = 18;
-		} else if (dm.getContent().length() > 64 && dm.getContent().length() <= 72) {
+		} else if (dialogModel.getContent().length() > 64 && dialogModel.getContent().length() <= 72) {
 			size = 16;
-		} else if (dm.getContent().length() > 72 && dm.getContent().length() <= 84) {
+		} else if (dialogModel.getContent().length() > 72 && dialogModel.getContent().length() <= 84) {
 			size = 14;
-		} else if (dm.getContent().length() > 84 && dm.getContent().length() <= 110) {
+		} else if (dialogModel.getContent().length() > 84 && dialogModel.getContent().length() <= 110) {
 			size = 13;
 		} else {
-			throw new ContentOutOfRangeException("设定的内容字数超出限制（110长度）！超出：" + (dm.getContent().length() - 110));
+			throw new ContentOutOfRangeException("设定的内容字数超出限制（110长度）！超出：" + (dialogModel.getContent().length() - 110));
 		}
-		JLabel content = new JLabel("<html>" + dm.getContent() + "</html>");
-		content.setFont(new Font("等线", Font.BOLD, size));
-		content.setBounds(101, 40, 297, 78);
-		URL jbnor = this.getClass().getResource("/mydialog/button/close-normal.png");
-		URL jbmon = this.getClass().getResource("/mydialog/button/close-mouseon.png");
-		String ico = "";
-		if (dm.getDialogType() == 0) {
-			ico = "/mydialog/bg/ico/info-ico.png";
-		} else if (dm.getDialogType() == 1) {
-			ico = "/mydialog/bg/ico/warn-ico.png";
-		} else if (dm.getDialogType() == 2) {
-			ico = "/mydialog/bg/ico/error-ico.png";
+		JLabel contentLabel = new JLabel("<html>" + dialogModel.getContent() + "</html>");
+		contentLabel.setFont(new Font("等线", Font.BOLD, size));
+		contentLabel.setBounds(101, 40, 297, 78);
+		URL buttonNormalImage = InfoDialog.class.getResource("/mydialog/button/close-normal.png");
+		URL buttonMouseOnImage = InfoDialog.class.getResource("/mydialog/button/close-mouseon.png");
+		String iconPath = "/mydialog/bg/ico/error-ico.png";
+		if (dialogModel.getDialogType() == 0) {
+			iconPath = "/mydialog/bg/ico/info-ico.png";
+		} else if (dialogModel.getDialogType() == 1) {
+			iconPath = "/mydialog/bg/ico/warn-ico.png";
+		} else if (dialogModel.getDialogType() == 2) {
+			iconPath = "/mydialog/bg/ico/error-ico.png";
 		}
-		URL frico = InfoDialog.class.getResource(ico);
-		JLabel icol = new JLabel(new ImageIcon(frico));
-		icol.setBounds(31, 62, 45, 45);
-		JButton close = new JButton(new ImageIcon(jbnor));
+		URL iconUrl = InfoDialog.class.getResource(iconPath);
+		JLabel iconLabel = new JLabel(new ImageIcon(iconUrl));
+		iconLabel.setBounds(31, 62, 45, 45);
+		JButton close = new JButton(new ImageIcon(buttonNormalImage));
 		close.setBounds(407, 0, 28, 28);
 		close.setContentAreaFilled(false);
 		close.setBorderPainted(false);
 		close.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				close.setIcon(new ImageIcon(jbmon));
+				close.setIcon(new ImageIcon(buttonMouseOnImage));
 			}
 
 			public void mouseExited(MouseEvent e) {
-				close.setIcon(new ImageIcon(jbnor));
+				close.setIcon(new ImageIcon(buttonNormalImage));
 			}
 		});
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jd.dispose();
+				dialog.dispose();
 			}
 		});
 		JButton ok = new JButton("知道了");
@@ -139,85 +95,194 @@ public class InfoDialog {
 		ok.setContentAreaFilled(false);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jd.dispose();
+				dialog.dispose();
 			}
 		});
-		JPanel jp = new JPanel();
-		jp.setOpaque(false);
-		jp.setLayout(null);
-		jp.add(title);
-		jp.add(icol);
-		jp.add(content);
-		jp.add(close);
-		jp.add(ok);
-		jd.getContentPane().add(jp);
-		jd.setVisible(true);
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setLayout(null);
+		panel.add(titleLabel);
+		panel.add(iconLabel);
+		panel.add(contentLabel);
+		panel.add(close);
+		panel.add(ok);
+		dialog.getContentPane().add(panel);
+		dialog.setVisible(true);
+		// 播放提示音
+		String audioPath = "/mydialog/audio/error.au";
+		if (dialogType == 0) {
+			audioPath = "/mydialog/audio/info.au";
+		} else if (dialogType == 1) {
+			audioPath = "/mydialog/audio/warn.au";
+		} else if (dialogType == 2) {
+			audioPath = "/mydialog/audio/error.au";
+		}
+		DialogUtils.playAudioAsync(InfoDialog.class.getResource(audioPath));
 	}
 
 	/**
-	 * 创建一个长消息信息告示框，用于大量信息告示，没有字数限制。
+	 * 创建一个信息告示窗
 	 * 
-	 * @param dm 信息告示窗的属性模型。需要先实例化DialogModel类并用里面的set方法设定属性，然后把这个实例作为此参数传入<br>
-	 *           这个窗口中传入的DialogModel实例需要设置的属性（4个，其中有2个有默认值）：<br>
-	 *           <ol>
-	 *           <li>setTitle(String title)：设置窗口标题</li>
-	 *           <li>setContent(String content)：设置窗口内容</li>
-	 *           <li>setIsModal(boolean isModal)：设置窗口是否模态，不设置的话默认为不模态</li>
-	 *           <li>setIsOnTop(boolean isOnTop)：设置窗口是否置顶，不设置的话默认为不置顶</li>
-	 *           </ol>
+	 * @param title      窗口标题
+	 * @param content    窗口内容
+	 * @param dialogType 窗口类型（类型使用com.gitee.swsk33.mydialog.util.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
+	 * @param isModal    窗口是否模态
+	 * @param isOnTop    窗口是否总在最前
+	 * @param isMute     是否关闭提示音
+	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
-	public void createLongMessageDialog(DialogModel dm) {
-		JDialog jd = this.dialogSetup(325, 345, "/mydialog/bg/LongMessageBg.png", dm);
-		JLabel title = new JLabel(dm.getTitle());
-		title.setFont(new Font("黑体", Font.BOLD, 15));
-		title.setBounds(3, 3, 156, 18);
-		JTextArea jta = new JTextArea();
-		jta.setFont(new Font("等线", Font.BOLD, 15));
-		jta.setText(dm.getContent());
-		jta.setLineWrap(true);
-		jta.setEditable(false);
-		JScrollPane jsp = new JScrollPane(jta);
-		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		jsp.setBounds(12, 36, 301, 257);
-		URL nor = this.getClass().getResource("/mydialog/button/long-close-normal.png");
-		URL mon = this.getClass().getResource("/mydialog/button/long-close-mouseon.png");
-		JButton close = new JButton(new ImageIcon(nor));
+	public static void createShortNoticeDialog(String title, String content, int dialogType, boolean isModal, boolean isOnTop, boolean isMute) throws ContentOutOfRangeException {
+		DialogModel dialogModel = new DialogModel(title, content, dialogType, isModal, isOnTop);
+		JDialog dialog = DialogFactory.makeInfoDialog(435, 178, "/mydialog/bg/InfoBg.png", dialogModel);
+		JLabel titleLabel = new JLabel();
+		titleLabel.setText(dialogModel.getTitle());
+		titleLabel.setFont(new Font("等线", Font.BOLD, 16));
+		titleLabel.setBounds(6, 3, 238, 24);
+		// 字体大小根据内容长度自适应
+		int size = 0;
+		if (dialogModel.getContent().length() <= 64) {
+			size = 18;
+		} else if (dialogModel.getContent().length() > 64 && dialogModel.getContent().length() <= 72) {
+			size = 16;
+		} else if (dialogModel.getContent().length() > 72 && dialogModel.getContent().length() <= 84) {
+			size = 14;
+		} else if (dialogModel.getContent().length() > 84 && dialogModel.getContent().length() <= 110) {
+			size = 13;
+		} else {
+			throw new ContentOutOfRangeException("设定的内容字数超出限制（110长度）！超出：" + (dialogModel.getContent().length() - 110));
+		}
+		JLabel contentLabel = new JLabel("<html>" + dialogModel.getContent() + "</html>");
+		contentLabel.setFont(new Font("等线", Font.BOLD, size));
+		contentLabel.setBounds(101, 40, 297, 78);
+		URL buttonNormalImage = InfoDialog.class.getResource("/mydialog/button/close-normal.png");
+		URL buttonMouseOnImage = InfoDialog.class.getResource("/mydialog/button/close-mouseon.png");
+		String iconPath = "/mydialog/bg/ico/error-ico.png";
+		if (dialogModel.getDialogType() == 0) {
+			iconPath = "/mydialog/bg/ico/info-ico.png";
+		} else if (dialogModel.getDialogType() == 1) {
+			iconPath = "/mydialog/bg/ico/warn-ico.png";
+		} else if (dialogModel.getDialogType() == 2) {
+			iconPath = "/mydialog/bg/ico/error-ico.png";
+		}
+		URL iconUrl = InfoDialog.class.getResource(iconPath);
+		JLabel iconLabel = new JLabel(new ImageIcon(iconUrl));
+		iconLabel.setBounds(31, 62, 45, 45);
+		JButton close = new JButton(new ImageIcon(buttonNormalImage));
+		close.setBounds(407, 0, 28, 28);
+		close.setContentAreaFilled(false);
+		close.setBorderPainted(false);
+		close.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				close.setIcon(new ImageIcon(buttonMouseOnImage));
+			}
+
+			public void mouseExited(MouseEvent e) {
+				close.setIcon(new ImageIcon(buttonNormalImage));
+			}
+		});
+		close.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dialog.dispose();
+			}
+		});
+		JButton ok = new JButton("知道了");
+		ok.setFont(new Font("黑体", Font.BOLD, 13));
+		ok.setBounds(168, 130, 82, 32);
+		ok.setContentAreaFilled(false);
+		ok.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dialog.dispose();
+			}
+		});
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setLayout(null);
+		panel.add(titleLabel);
+		panel.add(iconLabel);
+		panel.add(contentLabel);
+		panel.add(close);
+		panel.add(ok);
+		dialog.getContentPane().add(panel);
+		dialog.setVisible(true);
+		if (!isMute) {
+			// 播放提示音
+			String audioPath = "/mydialog/audio/error.au";
+			if (dialogType == 0) {
+				audioPath = "/mydialog/audio/info.au";
+			} else if (dialogType == 1) {
+				audioPath = "/mydialog/audio/warn.au";
+			} else if (dialogType == 2) {
+				audioPath = "/mydialog/audio/error.au";
+			}
+			DialogUtils.playAudioAsync(InfoDialog.class.getResource(audioPath));
+		}
+	}
+
+	/**
+	 * 创建一个长消息信息告示框，用于大量信息告示，没有字数限制
+	 * 
+	 * @param title   窗口标题
+	 * @param content 窗口内容
+	 * @param isModal 是否为模态窗
+	 * @param isOnTop 是否置顶
+	 */
+	public static void createLongMessageDialog(String title, String content, boolean isModal, boolean isOnTop) {
+		DialogModel dialogModel = new DialogModel();
+		dialogModel.setTitle(title);
+		dialogModel.setContent(content);
+		dialogModel.setModal(isModal);
+		dialogModel.setOnTop(isOnTop);
+		JDialog dialog = DialogFactory.makeInfoDialog(325, 345, "/mydialog/bg/LongMessageBg.png", dialogModel);
+		JLabel titleLabel = new JLabel(dialogModel.getTitle());
+		titleLabel.setFont(new Font("黑体", Font.BOLD, 15));
+		titleLabel.setBounds(3, 3, 156, 18);
+		JTextArea textArea = new JTextArea();
+		textArea.setFont(new Font("等线", Font.BOLD, 15));
+		textArea.setText(dialogModel.getContent());
+		textArea.setLineWrap(true);
+		textArea.setEditable(false);
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(12, 36, 301, 257);
+		URL normalButtonImage = InfoDialog.class.getResource("/mydialog/button/long-close-normal.png");
+		URL mouseOnButtonImage = InfoDialog.class.getClass().getResource("/mydialog/button/long-close-mouseon.png");
+		JButton close = new JButton(new ImageIcon(normalButtonImage));
 		close.setBounds(299, 2, 24, 24);
 		close.setBorderPainted(false);
 		close.setContentAreaFilled(false);
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jd.dispose();
+				dialog.dispose();
 			}
 		});
 		close.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				close.setIcon(new ImageIcon(mon));
+				close.setIcon(new ImageIcon(mouseOnButtonImage));
 			}
 
 			public void mouseExited(MouseEvent e) {
-				close.setIcon(new ImageIcon(nor));
+				close.setIcon(new ImageIcon(normalButtonImage));
 			}
 		});
 		JButton ok = new JButton("知道了");
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				jd.dispose();
+				dialog.dispose();
 			}
 		});
 		ok.setFont(new Font("黑体", Font.BOLD, 14));
 		ok.setContentAreaFilled(false);
 		ok.setBounds(122, 305, 79, 28);
-		JPanel jp = new JPanel();
-		jp.setOpaque(false);
-		jp.setLayout(null);
-		jp.add(title);
-		jp.add(jsp);
-		jp.add(close);
-		jp.add(ok);
-		jd.getContentPane().add(jp);
-		jd.setVisible(true);
+		JPanel panel = new JPanel();
+		panel.setOpaque(false);
+		panel.setLayout(null);
+		panel.add(titleLabel);
+		panel.add(scrollPane);
+		panel.add(close);
+		panel.add(ok);
+		dialog.getContentPane().add(panel);
+		dialog.setVisible(true);
 	}
 
 }
