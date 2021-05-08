@@ -1,4 +1,4 @@
-package swsk33.mydialogj;
+package com.gitee.swsk33.mydialog;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -15,9 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import swsk33.mydialogj.event.EventEditor;
-import swsk33.mydialogj.exception.ContentOutOfRangeException;
-import swsk33.mydialogj.model.DialogModel;
+import com.gitee.swsk33.mydialog.event.EventEditor;
+import com.gitee.swsk33.mydialog.exception.ContentOutOfRangeException;
+import com.gitee.swsk33.mydialog.model.DialogModel;
 
 /**
  * 事件告示窗，分为：<br>
@@ -40,6 +40,7 @@ public class EventDialog {
 	private JButton no = new JButton();
 	private Dimension sc = Toolkit.getDefaultToolkit().getScreenSize();
 
+	@SuppressWarnings("deprecation")
 	private void dialogSetup(int width, int height, String bgPath, DialogModel dm) throws ContentOutOfRangeException { // 设置窗口基本属性和特性
 		jd.setSize(width, height);
 		jd.setLocation((sc.width - jd.getWidth()) / 2, (sc.height - jd.getHeight()) / 2);
@@ -89,15 +90,15 @@ public class EventDialog {
 		content.setText("<html>" + dm.getContent() + "</html>");
 		content.setFont(new Font("等线", Font.BOLD, size));
 		content.setBounds(101, 40, 297, 78);
-		URL jbnor = this.getClass().getResource("/res/button/close-normal.png");
-		URL jbmon = this.getClass().getResource("/res/button/close-mouseon.png");
+		URL jbnor = this.getClass().getResource("/mydialog/button/close-normal.png");
+		URL jbmon = this.getClass().getResource("/mydialog/button/close-mouseon.png");
 		String ico = "";
 		if (dm.getDialogType() == 0) {
-			ico = "/res/bg/ico/info-ico.png";
+			ico = "/mydialog/bg/ico/info-ico.png";
 		} else if (dm.getDialogType() == 1) {
-			ico = "/res/bg/ico/warn-ico.png";
+			ico = "/mydialog/bg/ico/warn-ico.png";
 		} else if (dm.getDialogType() == 2) {
-			ico = "/res/bg/ico/error-ico.png";
+			ico = "/mydialog/bg/ico/error-ico.png";
 		}
 		URL frico = InfoDialog.class.getResource(ico);
 		JLabel icol = new JLabel();
@@ -158,7 +159,7 @@ public class EventDialog {
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
 	public boolean createBooleanEventDialog(DialogModel dm) throws ContentOutOfRangeException {
-		this.dialogSetup(435, 178, "/res/bg/BooleanDialog.png", dm);
+		this.dialogSetup(435, 178, "/mydialog/bg/BooleanDialog.png", dm);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isok = true;
@@ -190,7 +191,7 @@ public class EventDialog {
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
 	public void createCustomEventDialog(DialogModel dm, EventEditor ete) throws ContentOutOfRangeException {
-		this.dialogSetup(435, 178, "/res/bg/EventBg.png", dm);
+		this.dialogSetup(435, 178, "/mydialog/bg/EventBg.png", dm);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ete.customOkEvent();

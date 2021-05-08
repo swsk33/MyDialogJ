@@ -1,9 +1,10 @@
-package swsk33.mydialogj;
+package com.gitee.swsk33.mydialog;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,9 +18,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import swsk33.mydialogj.exception.ContentOutOfRangeException;
-import java.awt.Color;
+import com.gitee.swsk33.mydialog.exception.ContentOutOfRangeException;
 
+/**
+ * 文本输入窗口
+ * 
+ * @author swsk33
+ *
+ */
 public class InputDialog {
 
 	private static int x;
@@ -32,8 +38,8 @@ public class InputDialog {
 	private JButton ok = new JButton("确定");
 	private JButton cancel = new JButton("取消");
 
-	private void dialogSetup(int width, int height, String bgPath, String dialogTitle, String tipContent)
-			throws ContentOutOfRangeException {
+	@SuppressWarnings("deprecation")
+	private void dialogSetup(int width, int height, String bgPath, String dialogTitle, String tipContent) throws ContentOutOfRangeException {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension sc = kit.getScreenSize();
 		jd.setSize(width, height);
@@ -106,7 +112,7 @@ public class InputDialog {
 	 * @throws ContentOutOfRangeException 提示内容字数超过限制抛出异常
 	 */
 	public String createTextInputDialog(String dialogTitle, String tipContent) throws ContentOutOfRangeException {
-		this.dialogSetup(435, 178, "/res/bg/InputBg.png", dialogTitle, tipContent);
+		this.dialogSetup(435, 178, "/mydialog/bg/InputBg.png", dialogTitle, tipContent);
 		normalInput.setBounds(43, 86, 356, 28);
 		passwordInput.setBounds(0, 0, 0, 0);
 		ok.addActionListener(new ActionListener() {
@@ -130,10 +136,11 @@ public class InputDialog {
 	 * @throws ContentOutOfRangeException 提示内容字数超过限制抛出异常
 	 */
 	public String createPasswordInputDialog(String dialogTitle, String tipContent) throws ContentOutOfRangeException {
-		this.dialogSetup(435, 178, "/res/bg/InputBg.png", dialogTitle, tipContent);
+		this.dialogSetup(435, 178, "/mydialog/bg/InputBg.png", dialogTitle, tipContent);
 		normalInput.setBounds(0, 0, 0, 0);
 		passwordInput.setBounds(43, 86, 356, 28);
 		ok.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if (!normalInput.getText().toString().equals("")) {
 					inputText = passwordInput.getText().toString();

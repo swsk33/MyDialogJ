@@ -1,4 +1,4 @@
-package swsk33.mydialogj;
+package com.gitee.swsk33.mydialog;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -18,8 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import swsk33.mydialogj.exception.ContentOutOfRangeException;
-import swsk33.mydialogj.model.DialogModel;
+import com.gitee.swsk33.mydialog.exception.ContentOutOfRangeException;
+import com.gitee.swsk33.mydialog.model.DialogModel;
 
 /**
  * 信息告示窗，只用于显示提示信息
@@ -33,6 +33,7 @@ public class InfoDialog {
 	private static int y;
 	private Dimension sc = Toolkit.getDefaultToolkit().getScreenSize();
 
+	@SuppressWarnings("deprecation")
 	private JDialog dialogSetup(int width, int height, String bgPath, DialogModel dm) { // 设置窗口基本属性和特性
 		JDialog jd = new JDialog();
 		jd.setSize(width, height);
@@ -80,7 +81,7 @@ public class InfoDialog {
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
 	public void createShortNoticeDialog(DialogModel dm) throws ContentOutOfRangeException {
-		JDialog jd = this.dialogSetup(435, 178, "/res/bg/InfoBg.png", dm);
+		JDialog jd = this.dialogSetup(435, 178, "/mydialog/bg/InfoBg.png", dm);
 		JLabel title = new JLabel();
 		title.setText(dm.getTitle());
 		title.setFont(new Font("等线", Font.BOLD, 16));
@@ -101,15 +102,15 @@ public class InfoDialog {
 		JLabel content = new JLabel("<html>" + dm.getContent() + "</html>");
 		content.setFont(new Font("等线", Font.BOLD, size));
 		content.setBounds(101, 40, 297, 78);
-		URL jbnor = this.getClass().getResource("/res/button/close-normal.png");
-		URL jbmon = this.getClass().getResource("/res/button/close-mouseon.png");
+		URL jbnor = this.getClass().getResource("/mydialog/button/close-normal.png");
+		URL jbmon = this.getClass().getResource("/mydialog/button/close-mouseon.png");
 		String ico = "";
 		if (dm.getDialogType() == 0) {
-			ico = "/res/bg/ico/info-ico.png";
+			ico = "/mydialog/bg/ico/info-ico.png";
 		} else if (dm.getDialogType() == 1) {
-			ico = "/res/bg/ico/warn-ico.png";
+			ico = "/mydialog/bg/ico/warn-ico.png";
 		} else if (dm.getDialogType() == 2) {
-			ico = "/res/bg/ico/error-ico.png";
+			ico = "/mydialog/bg/ico/error-ico.png";
 		}
 		URL frico = InfoDialog.class.getResource(ico);
 		JLabel icol = new JLabel(new ImageIcon(frico));
@@ -166,7 +167,7 @@ public class InfoDialog {
 	 *           </ol>
 	 */
 	public void createLongMessageDialog(DialogModel dm) {
-		JDialog jd = this.dialogSetup(325, 345, "/res/bg/LongMessageBg.png", dm);
+		JDialog jd = this.dialogSetup(325, 345, "/mydialog/bg/LongMessageBg.png", dm);
 		JLabel title = new JLabel(dm.getTitle());
 		title.setFont(new Font("黑体", Font.BOLD, 15));
 		title.setBounds(3, 3, 156, 18);
@@ -179,8 +180,8 @@ public class InfoDialog {
 		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		jsp.setBounds(12, 36, 301, 257);
-		URL nor = this.getClass().getResource("/res/button/long-close-normal.png");
-		URL mon = this.getClass().getResource("/res/button/long-close-mouseon.png");
+		URL nor = this.getClass().getResource("/mydialog/button/long-close-normal.png");
+		URL mon = this.getClass().getResource("/mydialog/button/long-close-mouseon.png");
 		JButton close = new JButton(new ImageIcon(nor));
 		close.setBounds(299, 2, 24, 24);
 		close.setBorderPainted(false);

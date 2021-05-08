@@ -1,4 +1,4 @@
-package swsk33.mydialogj.event;
+package com.gitee.swsk33.mydialog.event;
 
 /**
  * 用于事件告示框中实现自定义按钮事件的接口

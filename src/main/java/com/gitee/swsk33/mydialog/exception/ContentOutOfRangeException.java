@@ -1,4 +1,4 @@
-package swsk33.mydialogj.exception;
+package com.gitee.swsk33.mydialog.exception;
 
 /**
  * 提示框设定的字数超过限制抛出此异常
