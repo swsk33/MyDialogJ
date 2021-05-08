@@ -25,5 +25,25 @@
 - static void createShortNoticeDialog(String title, String content, int dialogType, boolean isModal, boolean isOnTop, boolean isMute)：创建一个信息告示窗
 - static void createLongMessageDialog(String title, String content, boolean isModal, boolean isOnTop)：创建一个长消息信息告示框，用于大量信息告示，没有字数限制
 #### 类EventDialog：事件告示窗，分为：布尔型窗口：有“确定”和“取消”两个按钮，点确定返回true点取消返回false；自定义事件窗口：有“确定”和“取消”两个按钮，通过实现接口的方法来给确定按钮和取消添加代码段
+- static boolean createBooleanEventDialog(String title, String content, int dialogType, boolean isMute)：布尔型事件窗口，是一个模态且置顶的窗口，点确定返回true，取消或者直接关闭窗口返回false
+- static void createCustomEventDialog(String title, String content, int dialogType, boolean isMute, EventEditor eventInterface)：自定义事件窗口，是一个模态且置顶的窗口，通过定义接口EventEditor中的customOkEvent()和customCancelEvent()方法，传入到此方法中来分别实现确定按钮和取消按钮的自定义事件
+**例如创建一个自定义事件窗口，点击是输出ok，点击否输出cancel：**<br>
+```
+EventDialog.createCustomEventDialog("标题", "内容", DialogTypeValue.INFO, false, new EventEditor() {
+	@Override
+	public void customOkEvent() {
+		System.out.println("ok");
+	}
 
+	@Override
+	public void customCancelEvent() {
+		System.out.println("cancel");
+	}
+});
+```
+#### 类InputDialog：文本输入窗口
+- static String createTextInputDialog(String dialogTitle, String tipContent)：创建一个普通文本输入框
+- static String createPasswordInputDialog(String dialogTitle, String tipContent)：创建一个密码输入文本框
+
+**详细的使用可以在调用类的方法时查看，IDE中会显示其中的详细文档**<br>
 >最后更新：2020.5.8
