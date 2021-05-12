@@ -29,7 +29,7 @@ public class InfoDialog {
 	 * 
 	 * @param title      窗口标题
 	 * @param content    窗口内容
-	 * @param dialogType 窗口类型（类型使用com.gitee.swsk33.mydialog.util.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
+	 * @param dialogType 窗口类型（类型使用com.gitee.swsk33.mydialog.param.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
 	 */
 	public static void createShortNoticeDialog(String title, String content, int dialogType) throws ContentOutOfRangeException {
@@ -125,7 +125,7 @@ public class InfoDialog {
 	 * 
 	 * @param title      窗口标题
 	 * @param content    窗口内容
-	 * @param dialogType 窗口类型（类型使用com.gitee.swsk33.mydialog.util.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
+	 * @param dialogType 窗口类型（类型使用com.gitee.swsk33.mydialog.param.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
 	 * @param isModal    窗口是否模态
 	 * @param isOnTop    窗口是否总在最前
 	 * @param isMute     是否关闭提示音

@@ -27,7 +27,7 @@ public class EventDialog {
 	 * 
 	 * @param title      窗口标题
 	 * @param content    窗口内容
-	 * @param dialogType 窗口类型（类型使用com.gitee.swsk33.mydialog.util.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
+	 * @param dialogType 窗口类型（类型使用com.gitee.swsk33.mydialog.param.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
 	 * @param isMute     是否关闭提示音
 	 * @return 点击确定返回true，取消返回false
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常
@@ -71,7 +71,7 @@ public class EventDialog {
 	 * 
 	 * @param title          窗口标题
 	 * @param content        窗口内容
-	 * @param dialogType     窗口类型（类型使用com.gitee.swsk33.mydialog.util.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
+	 * @param dialogType     窗口类型（类型使用com.gitee.swsk33.mydialog.param.DialogTypeValue类中的静态常量值，DialogTypeValue.INFO为信息告示窗，DialogTypeValue.WARN为警告信息窗，DialogTypeValue.ERROR为错误信息窗）
 	 * @param isMute         是否关闭提示音
 	 * @param eventInterface 接口，需要在这里实现接口的两个方法分别实现两个按钮的事件自定义（接口位于com.gitee.swsk33.mydialog.event下）
 	 * @throws ContentOutOfRangeException 设定的内容字数超出了限制（110字）抛出异常

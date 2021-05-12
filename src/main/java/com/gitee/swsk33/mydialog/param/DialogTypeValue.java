@@ -1,4 +1,4 @@
-package com.gitee.swsk33.mydialog.util;
+package com.gitee.swsk33.mydialog.param;
 
 public class DialogTypeValue {
 

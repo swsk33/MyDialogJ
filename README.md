@@ -15,7 +15,7 @@
 <dependency>
 	<groupId>com.gitee.swsk33</groupId>
 	<artifactId>mydialog-java</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1</version>
 </dependency>
 ```
 ### 2，导入com.gitee.swsk33.mydialog下所有的类或者需要的类
@@ -45,5 +45,6 @@ EventDialog.createCustomEventDialog("标题", "内容", DialogTypeValue.INFO, fa
 - static String createTextInputDialog(String dialogTitle, String tipContent)：创建一个普通文本输入框
 - static String createPasswordInputDialog(String dialogTitle, String tipContent)：创建一个密码输入文本框
 
-**详细的使用可以在调用类的方法时查看，IDE中会显示其中的详细文档**<br>
->最后更新：2020.5.8
+**详细的使用可以在调用类的方法时查看，IDE中会显示其中的详细文档**
+
+>最后更新：2020.5.12
