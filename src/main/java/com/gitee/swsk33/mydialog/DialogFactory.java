@@ -44,6 +44,19 @@ class DialogFactory {
 	private static int mouseAtY;
 
 	/**
+	 * 设置JDialog对话窗的背景图片
+	 * 
+	 * @param dialog 待设定对话窗
+	 * @param image  背景图片
+	 */
+	private static void setDialogBackground(JDialog dialog, ImageIcon image) {
+		JLabel backgroundLabel = new JLabel(image);
+		backgroundLabel.setBounds(0, 0, dialog.getWidth(), dialog.getHeight());
+		((JPanel) dialog.getContentPane()).setOpaque(false);
+		dialog.getLayeredPane().add(backgroundLabel, Integer.valueOf(Integer.MIN_VALUE));
+	}
+
+	/**
 	 * 生成一个信息告示窗口对象
 	 * 
 	 * @param width          窗口宽
@@ -59,11 +72,7 @@ class DialogFactory {
 		dialog.setModal(dialogModel.isModal());
 		dialog.setAlwaysOnTop(dialogModel.isOnTop());
 		dialog.setUndecorated(true);
-		URL backgroundImageUrl = DialogFactory.class.getResource(backgroundPath);
-		JLabel backgroundLabel = new JLabel(new ImageIcon(backgroundImageUrl));
-		backgroundLabel.setBounds(0, 0, dialog.getWidth(), dialog.getHeight());
-		((JPanel) dialog.getContentPane()).setOpaque(false);
-		dialog.getLayeredPane().add(backgroundLabel, Integer.valueOf(Integer.MIN_VALUE));
+		setDialogBackground(dialog, new ImageIcon(DialogFactory.class.getResource(backgroundPath)));
 		dialog.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				mouseAtX = e.getPoint().x;
@@ -100,11 +109,7 @@ class DialogFactory {
 		dialog.setAlwaysOnTop(dialogModel.isOnTop());
 		dialog.setUndecorated(true);
 		dialog.setModal(true);
-		URL backgroundImageUrl = DialogFactory.class.getResource(backgroundPath);
-		JLabel backgroundLabel = new JLabel(new ImageIcon(backgroundImageUrl));
-		backgroundLabel.setBounds(0, 0, dialog.getWidth(), dialog.getHeight());
-		((JPanel) dialog.getContentPane()).setOpaque(false);
-		dialog.getLayeredPane().add(backgroundLabel, Integer.valueOf(Integer.MIN_VALUE));
+		setDialogBackground(dialog, new ImageIcon(DialogFactory.class.getResource(backgroundPath)));
 		dialog.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				mouseAtX = e.getPoint().x;
@@ -214,11 +219,7 @@ class DialogFactory {
 		dialog.setModal(true);
 		dialog.setAlwaysOnTop(true);
 		dialog.setUndecorated(true);
-		URL backgroundImage = DialogFactory.class.getResource("/mydialog/bg/InputBg.png");
-		JLabel backgroundLabel = new JLabel(new ImageIcon(backgroundImage));
-		backgroundLabel.setBounds(0, 0, dialog.getWidth(), dialog.getHeight());
-		((JPanel) dialog.getContentPane()).setOpaque(false);
-		dialog.getLayeredPane().add(backgroundLabel, Integer.valueOf(Integer.MIN_VALUE));
+		setDialogBackground(dialog, new ImageIcon(DialogFactory.class.getResource("/mydialog/bg/InputBg.png")));
 		dialog.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				mouseAtX = e.getPoint().x;

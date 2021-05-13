@@ -72,7 +72,7 @@ public class InfoDialog {
 		JLabel iconLabel = new JLabel(new ImageIcon(iconUrl));
 		iconLabel.setBounds(31, 62, 45, 45);
 		JButton close = new JButton(new ImageIcon(buttonNormalImage));
-		close.setBounds(415, 0, 28, 28);
+		close.setBounds(407, 0, 28, 28);
 		close.setContentAreaFilled(false);
 		close.setBorderPainted(false);
 		close.addMouseListener(new MouseAdapter() {
@@ -168,7 +168,7 @@ public class InfoDialog {
 		JLabel iconLabel = new JLabel(new ImageIcon(iconUrl));
 		iconLabel.setBounds(31, 62, 45, 45);
 		JButton close = new JButton(new ImageIcon(buttonNormalImage));
-		close.setBounds(415, 0, 28, 28);
+		close.setBounds(407, 0, 28, 28);
 		close.setContentAreaFilled(false);
 		close.setBorderPainted(false);
 		close.addMouseListener(new MouseAdapter() {
@@ -248,7 +248,7 @@ public class InfoDialog {
 		URL normalButtonImage = InfoDialog.class.getResource("/mydialog/button/long-close-normal.png");
 		URL mouseOnButtonImage = InfoDialog.class.getClass().getResource("/mydialog/button/long-close-mouseon.png");
 		JButton close = new JButton(new ImageIcon(normalButtonImage));
-		close.setBounds(299, 2, 24, 24);
+		close.setBounds(301, 0, 24, 24);
 		close.setBorderPainted(false);
 		close.setContentAreaFilled(false);
 		close.addActionListener(new ActionListener() {
