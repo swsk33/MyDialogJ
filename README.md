@@ -15,7 +15,7 @@
 <dependency>
 	<groupId>com.gitee.swsk33</groupId>
 	<artifactId>mydialog-java</artifactId>
-	<version>2.0.3</version>
+	<version>2.0.5</version>
 </dependency>
 ```
 ### 2，导入com.gitee.swsk33.mydialog下所有的类或者需要的类

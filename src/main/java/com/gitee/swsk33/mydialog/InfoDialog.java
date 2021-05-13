@@ -246,7 +246,7 @@ public class InfoDialog {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(12, 36, 301, 257);
 		URL normalButtonImage = InfoDialog.class.getResource("/mydialog/button/long-close-normal.png");
-		URL mouseOnButtonImage = InfoDialog.class.getClass().getResource("/mydialog/button/long-close-mouseon.png");
+		URL mouseOnButtonImage = InfoDialog.class.getResource("/mydialog/button/long-close-mouseon.png");
 		JButton close = new JButton(new ImageIcon(normalButtonImage));
 		close.setBounds(301, 0, 24, 24);
 		close.setBorderPainted(false);
