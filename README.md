@@ -47,4 +47,4 @@ EventDialog.createCustomEventDialog("标题", "内容", DialogTypeValue.INFO, fa
 
 **详细的使用可以在调用类的方法时查看，IDE中会显示其中的详细文档**
 
->最后更新：2020.5.12
+>最后更新：2021.5.13
